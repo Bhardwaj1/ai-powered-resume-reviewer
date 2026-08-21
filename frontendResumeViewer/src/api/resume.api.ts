@@ -2,6 +2,8 @@ import type { ReviewApiResponse, ReviewData } from "../types/resume.types";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
+console.log("API BASE URL:", import.meta.env.VITE_API_BASE_URL);
+
 export async function reviewResume(resumeFile: File): Promise<ReviewData> {
   const formData = new FormData();
   formData.append("resume", resumeFile);
