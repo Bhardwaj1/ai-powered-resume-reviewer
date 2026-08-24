@@ -12,16 +12,13 @@ const reviewResume = async (req, res) => {
     }
 
     const extractedText = await extractTextFromPdf(req.file.buffer);
-    console.log({extractedText})
 
     const resumeText = cleanResumeText(extractedText);
-
-    console.log({resumeText})
 
     if (!resumeText) {
       return res.status(400).json({
         success: false,
-        message: "Could not extract text from the PDF.",
+        message: "Could not extract readable text from the PDF.",
       });
     }
 
@@ -34,6 +31,13 @@ const reviewResume = async (req, res) => {
     });
   } catch (error) {
     console.error("Review Error:", error);
+
+    if (error.name === "InvalidPDFException") {
+      return res.status(400).json({
+        success: false,
+        message: "The uploaded file is not a valid PDF.",
+      });
+    }
 
     return res.status(500).json({
       success: false,

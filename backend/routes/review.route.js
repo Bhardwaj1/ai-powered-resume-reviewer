@@ -22,6 +22,17 @@ const upload = multer({
   },
 });
 
-router.post("/", upload.single("resume"), reviewResume);
+router.post(
+  "/",
+  (req, res, next) => {
+    upload.single("resume")(req, res, (error) => {
+      if (error) {
+        return next(error);
+      }
+      reviewResume(req, res, next);
+    });
+  },
+  reviewResume,
+);
 
 module.exports = router;
