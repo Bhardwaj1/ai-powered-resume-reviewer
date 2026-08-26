@@ -73,15 +73,24 @@ Do not return explanations outside the JSON.
 Do not wrap the JSON in \`\`\`.
 
 Return exactly this structure:
-
 {
   "score": number,
+
+  "scoreBreakdown": {
+    "contactInformation": number,
+    "professionalSummary": number,
+    "skills": number,
+    "workExperience": number,
+    "projects": number,
+    "education": number,
+    "atsFormatting": number
+  },
+
   "summary": "string",
   "strengths": ["string"],
   "weaknesses": ["string"],
   "suggestions": ["string"]
 }
-
 The score must be a number between 0 and 100.
 
 Resume:

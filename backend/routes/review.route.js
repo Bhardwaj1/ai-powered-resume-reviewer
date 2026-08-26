@@ -10,7 +10,7 @@ const fileFilter = (req, file, cb) => {
   if (file.mimetype === "application/pdf") {
     cb(null, true);
   } else {
-    cb(new Error("Only Pdf file are allowed"), false);
+    cb(new Error("Only PDF files are allowed"), false);
   }
 };
 
@@ -22,17 +22,14 @@ const upload = multer({
   },
 });
 
-router.post(
-  "/",
-  (req, res, next) => {
-    upload.single("resume")(req, res, (error) => {
-      if (error) {
-        return next(error);
-      }
-      reviewResume(req, res, next);
-    });
-  },
-  reviewResume,
-);
+router.post("/", (req, res, next) => {
+  upload.single("resume")(req, res, (error) => {
+    if (error) {
+      return next(error);
+    }
+
+    reviewResume(req, res, next);
+  });
+});
 
 module.exports = router;
